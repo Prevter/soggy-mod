@@ -43,7 +43,9 @@ bool SogLayer::init() {
     backMenu->setPosition(ccp(director->getScreenLeft() + 25.f, director->getScreenTop() - 22.f));
     setKeyboardEnabled(true);
     setKeypadEnabled(true);
+    #ifndef GEODE_IS_MACOS // sorry mac people, no music for you yet
     FMODAudioEngine::sharedEngine()->playMusic("SogLoop.mp3"_spr, true, 0.0f, 0);
+    #endif
     return true;
 }
 
@@ -58,12 +60,12 @@ void SogLayer::onClose(CCObject*) {
 
     auto scene = director->getRunningScene();
     GJGarageLayer* garage;
-    // #ifdef GEODE_IS_ANDROID64 //lol
+    #ifdef GEODE_IS_ANDROID64 //lol
     auto scene2 = GJGarageLayer::scene();
     garage = getChildOfType<GJGarageLayer>(scene2, 0);
-    // #else
-    // garage = GJGarageLayer::node();
-    // #endif
+    #else
+    garage = GJGarageLayer::node();
+    #endif
 
     scene->addChild(garage, -1);
 
